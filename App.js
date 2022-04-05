@@ -1,51 +1,16 @@
 import { useState } from 'react';
-import { View, Text, StyleSheet, StatusBar, TouchableHighlight} from 'react-native';
+import { View, Text, StyleSheet, StatusBar, TouchableHighlight, Button} from 'react-native';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-let a = 0;
+import TimerScreen from './screens/TimerScreen'
+import SettingsScreen from './screens/SettingsScreen'
+import StatScreen from './screens/StatScreen'
+import CalendarScreen from './screens/CalendarScreen'
+import TodoScreen from './screens/TodoScreen'
+
 const tab = createMaterialBottomTabNavigator();
-
-function CalendarScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Calendar!</Text>
-    </View>
-  );
-}
-
-function TodoScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Todo!</Text>
-    </View>
-  );
-}
-
-function TimerScreen(){
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Timer!</Text>
-    </View>
-  )
-}
-
-function StatScreen(){
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Statistics!</Text>
-    </View>
-  )
-}
-
-function SettingsScreen(){
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Settings!</Text>
-    </View>
-  )
-}
 
 export default function CloneTest() {
   return(
@@ -81,4 +46,4 @@ export default function CloneTest() {
   )
 }
 
-const styles = StyleSheet.create()
+const styles = StyleSheet.create();
