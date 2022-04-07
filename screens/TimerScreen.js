@@ -1,42 +1,75 @@
 import { useState } from 'react';
-import { View, Text, StyleSheet, StatusBar, TouchableHighlight, Button} from 'react-native';
+import { View, Text, StyleSheet, StatusBar, TouchableOpacity, Button} from 'react-native';
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
 import Position from 'react-native/Libraries/Components/Touchable/Position';
+import { backgroundColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
+
 
 export default function TimerScreen(){
 	const [Key, setKey] = useState(0);
+	const [TimerRunning, setTimerRunning] = useState(false);
+	const [DistractionCount, setDistractionCount] = useState(1);
+	const [RemainingTime, setRemainingTime] = useState(0);
+	const [TimerView, setTimerView] = useState(
+			<View style={{
+				justifyContent: 'center',
+				alignItems: 'center', 
+				// backgroundColor: 'dodgerblue',
+				width: 220,
+				height: 220,
+				borderRadius:150}}>
+				  <Text style={{fontSize: 17}}>
+					  Hit me
+				  </Text>
+				  <Text style={{fontSize: 17}}>
+					  When you are distracted
+				  </Text>
+			 </View>
+	);
 
 	function resetHandler(){
 		setKey(Key => Key+1);
 		setTimerRunning(false);
 	}
 
-	const [TimerRunning, setTimerRunning] = useState(false)
-	// const [DistractionCount, setDistractionCount] = useState(
-	// 	<View style={{alignItems: 'center'}}>
-	// 			<Text style={{fontSize: 13}}>
-	// 				Hit me
-	// 			</Text>
-	// 			<Text style={{fontSize: 13}}>
-	// 				When you are distracted
-	// 			</Text>
-	// 	</View>
+	function updateCount(){
+		setDistractionCount(DistractionCount=>DistractionCount+1)
+		setTimerView(
+			<View style={{
+				width: 220,
+				height: 220, 
+				justifyContent: 'center',
+				alignItems: 'center',
+				borderRadius: 300}}>
+					<Text style={{fontSize: 50}}>{DistractionCount}</Text>
+			</View>
+		);
+	}
 
-  
+	function renderTimerView(remainingTime){
+		setRemainingTime(remainingTime);
+		return(
+		<TouchableOpacity onPress={()=>TimerRunning?updateCount():null}
+			activeOpacity={TimerRunning? 0.2:1}>
+			{TimerView}
+		</TouchableOpacity>)
+	}
+
 	return (
 	  <View style={{ flex: 1, justifyContent: 'space-evenly', alignItems: 'center' }}>
+
+		<Text>{RemainingTime}</Text>
+		
 		<CountdownCircleTimer
 		  key = {Key}
 		  isPlaying={TimerRunning}
 		  duration={10}
 		  colors={['#000']}
-		  rotation={'counterclockwise'}>
+		  rotation={'counterclockwise'}
+		  size={250}>
 
-		  {({ remainingTime }) => <Text style={{fontSize: 25}}>{remainingTime}</Text>}
-		  {/* {({ remainingTime }) => 
-		  } */}
-
-		
+		  {/* {({ remainingTime }) => setTimerView(remainingTime)} */}
+		  {({remainingTime}) => renderTimerView(remainingTime)}
 
 		</CountdownCircleTimer>
   
