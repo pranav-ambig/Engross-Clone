@@ -5,6 +5,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import TimerScreen from './screens/TimerScreen'
+// import TimerScreen from './TimerScreen'
 import SettingsScreen from './screens/SettingsScreen'
 import StatScreen from './screens/StatScreen'
 import CalendarScreen from './screens/CalendarScreen'

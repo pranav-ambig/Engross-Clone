@@ -6,10 +6,18 @@ import { backgroundColor } from 'react-native/Libraries/Components/View/ReactNat
 
 
 export default function TimerScreen(){
+	const labels = ["Stay focused!",
+					"Don't get distracted!",
+					"Focus on your work!", 
+					"Stop dreaming!"]
+
 	const [Key, setKey] = useState(0);
+	const [WorkMode, setWorkMode] = useState(false);
 	const [TimerRunning, setTimerRunning] = useState(false);
 	const [DistractionCount, setDistractionCount] = useState(1);
 	const [RemainingTime, setRemainingTime] = useState(0);
+	const [CurrentLabelIndex, setCurrentLabelIndex] = useState(0);
+	const [Duration, setDuration] = useState(10);
 	const [TimerView, setTimerView] = useState(
 			<View style={{
 				justifyContent: 'center',
@@ -33,7 +41,13 @@ export default function TimerScreen(){
 	}
 
 	function updateCount(){
-		setDistractionCount(DistractionCount=>DistractionCount+1)
+		if (CurrentLabelIndex == 3){
+			setCurrentLabelIndex(0);
+		}
+		else {
+			setCurrentLabelIndex(CurrentLabelIndex=>CurrentLabelIndex+1);
+		}
+		setDistractionCount(DistractionCount=>DistractionCount+1);
 		setTimerView(
 			<View style={{
 				width: 220,
@@ -55,30 +69,69 @@ export default function TimerScreen(){
 		</TouchableOpacity>)
 	}
 
-	return (
-	  <View style={{ flex: 1, justifyContent: 'space-evenly', alignItems: 'center' }}>
+	function renderRemainingTime(time){
+		let time_min = Math.floor(time/60);
+		let time_sec = time%60;
+		if (time_min<10){
+			time_min = "0"+time_min.toString();
+		}
+		if (time_sec < 10){
+			time_sec = "0"+time_sec.toString();
+		}
+		return time_min+" : "+time_sec;
+	}
 
-		<Text>{RemainingTime}</Text>
+	function getLabel(){
+		if (WorkMode){
+			if (TimerRunning)
+				return labels[CurrentLabelIndex];
+			else
+				return "Work paused!";
+		}
+		else{
+			// console.log(WorkMode, TimerRunning);
+			return "Beat Distractions";
+		}
+	}
+
+	function timerHandler(){
+		setTimerRunning(!TimerRunning);
+		setWorkMode(!WorkMode);
+		getLabel();
+	}
+
+	function breakHandler(){
+		setDuration(20);
+		setTimerRunning(!TimerRunning);
+		setWorkMode(!WorkMode);
+		getLabel();
+	}
+
+	return (
+	  <View style={{ flex: 1, justifyContent: 'space-around', alignItems: 'center' }}>
+
+		<Text style={{fontSize: 16}}>{getLabel()}</Text>
+		<Text style={{fontSize: 40}}>{renderRemainingTime(RemainingTime)}</Text>
 		
 		<CountdownCircleTimer
 		  key = {Key}
 		  isPlaying={TimerRunning}
-		  duration={10}
+		  duration={Duration}
 		  colors={['#000']}
 		  rotation={'counterclockwise'}
 		  size={250}>
 
-		  {/* {({ remainingTime }) => setTimerView(remainingTime)} */}
 		  {({remainingTime}) => renderTimerView(remainingTime)}
 
 		</CountdownCircleTimer>
   
 		<View style={{width: '100%' ,flexDirection:'row', justifyContent: 'space-evenly'}}>
-		  <Button title={TimerRunning? "Pause":"Resume"} 
-				  onPress={()=>setTimerRunning(!TimerRunning)}
+		  <Button title={WorkMode? (TimerRunning? "Pause":"Resume") : "Timer"} 
+				  onPress={timerHandler}
 				  style={{innerWidth: 100}} 
 				  />
 		  <Button title="Reset" onPress={resetHandler}/>
+		  <Button title={WorkMode? "Skip" : "Break"} onPress={breakHandler}/>
 		</View>
 
 		<Text style={{position: 'absolute', bottom: 10, right: 30}}>Unlabelled</Text>
