@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { View, Text, StyleSheet, StatusBar, TouchableOpacity, Button} from 'react-native';
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
-import Position from 'react-native/Libraries/Components/Touchable/Position';
-import { backgroundColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
 
 
 export default function TimerScreen(){
@@ -101,7 +99,9 @@ export default function TimerScreen(){
 	}
 
 	function breakHandler(){
-		setDuration(20);
+		if (!WorkMode){
+			setDuration(20);
+		}
 		setTimerRunning(!TimerRunning);
 		setWorkMode(!WorkMode);
 		getLabel();

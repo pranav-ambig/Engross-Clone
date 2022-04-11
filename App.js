@@ -8,7 +8,7 @@ import TimerScreen from './screens/TimerScreen'
 // import TimerScreen from './TimerScreen'
 import SettingsScreen from './screens/SettingsScreen'
 import StatScreen from './screens/StatScreen'
-import CalendarScreen from './screens/CalendarScreen'
+import CalendarScreen from './screens/CalendarScreen.tsx'
 import TodoScreen from './screens/TodoScreen'
 
 const tab = createMaterialBottomTabNavigator();
