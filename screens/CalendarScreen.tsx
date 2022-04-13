@@ -1,33 +1,10 @@
-// import {View, Text} from 'react-native';
-// import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 
-// export default function CalendarScreen() {
-// 	return (
-//     <View>
-//       <Calendar
-//   // Collection of dates that have to be marked. Default = {}
-//   markedDates={{
-//     '2012-05-16': {selected: true, marked: true, selectedColor: 'blue'},
-//     '2012-05-17': {marked: true},
-//     '2012-05-18': {marked: true, dotColor: 'red', activeOpacity: 0},
-//     '2012-05-19': {disabled: true, disableTouchEvent: true},
-//     disableMonthChange:true
-//   }}
-// />
-//     </View>
-// 	);
-
-//   }
 import React, {useState} from 'react';
-import {Text, View, TouchableOpacity, SafeAreaView, StyleSheet} from 'react-native';
+import {Text, View, TouchableOpacity, SafeAreaView, StatusBar, StyleSheet} from 'react-native';
 import {Agenda} from 'react-native-calendars';
 import {Card, Avatar} from 'react-native-paper';
-// import Typography from '../components/Typography';
-// console.log(new Date().getFullYear()+'-'+Number(new Date().getMonth()+1).toString()+'-'+new Date().getDate())
-// var today=new Date().getFullYear()+'-'+Number(new Date().getMonth()+1).toString()+'-'+new Date().getDate()
-// var TODAY=[new Date().getFullYear(), new Date().getMonth()+1, new Date().getDate()];
-// var today=TODAY.join('-')
-// console.log(today)
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+
 const timeToString = (time) => {
   const date = new Date(time);
   return date.toISOString().split('T')[0];
@@ -38,20 +15,7 @@ const Schedule: React.FC = () => {
 
   const loadItems = (day) => {
     setTimeout(() => {
-      // for (let i = -15; i < 85; i++) {
-      //   const time = day.timestamp + i * 24 * 60 * 60 * 1000;
-      //   const strTime = timeToString(time);
-      //   if (!items[strTime]) {
-      //     items[strTime] = [];
-      //     const numItems = Math.floor(Math.random() * 3 + 1);
-      //     for (let j = 0; j < numItems; j++) {
-      //       items[strTime].push({
-      //         name: 'Item for ' + strTime + ' #' + j,
-      //         height: Math.max(50, Math.floor(Math.random() * 150)),
-      //       });
-      //     }
-      //   }
-      // }
+     
       const newItems = {};
       Object.keys(items).forEach((key) => {
         newItems[key] = items[key];
@@ -75,16 +39,14 @@ const Schedule: React.FC = () => {
               <Text>{item.name}</Text>
               <Avatar.Text style={{height:'90%'}} label="J" />
             </SafeAreaView>
+            {/* <StatusBar style='auto'/> */}
           </Card.Content>
         </Card>
       </TouchableOpacity>
     );
   };
   const DateRender = (item)=> {
-
-
   }
-
   return (
     <View style={{flex:1}}>
       <Agenda
@@ -93,20 +55,55 @@ const Schedule: React.FC = () => {
         selected={timeToString(new Date())}
         renderItem={renderItem}
       />
-      <Text style={{position: 'absolute',top:500, right:130 }}>
+      <MaterialCommunityIcons name="calendar-blank" color={'black'} size={130} style={{position: 'absolute', top: 250, left: 130}}/>
+      <Text style={{position: 'absolute',top:400, right:130 }}>
                 No events for the day.
       </Text>
-      <Text style={{position: 'absolute',top:520, right:50, color:'grey' }} >
+      <Text style={{position: 'absolute',top:420, right:50, color:'grey' }} >
                 Tap on + to add an event or create a schedule.
       </Text >
       <Text style={{fontSize: 20, position: 'absolute', bottom:0}}>
         Events
       </Text>
-      <Text style={{left: 70, fontSize:20}}>
+      <Text style={{left: 70, fontSize:20, top: 50}}>
         Tasks
       </Text>
+      <View >
+      <TouchableOpacity style={{width:50, height: 50, backgroundColor:'grey', left:340, borderRadius: 100}}>
+        <Text>
+          +
+        </Text>
+      </TouchableOpacity>
+      </View>
       </View>
   );
-};
+};const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  roundButton1: {
+    width: 100,
+    height: 100,
+    // justifyContent: 'center',
+    // alignItems: 'center',
+    padding: 10,
+    borderRadius: 100,
+    backgroundColor: 'orange',
+    position:'absolute',
+    right: 100
+  },
+  roundButton2: {
+    marginTop: 20,
+    width: 150,
+    height: 150,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+    borderRadius: 100,
+    backgroundColor: '#ccc',
+  },
+});
 
 export default Schedule;

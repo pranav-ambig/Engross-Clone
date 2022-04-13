@@ -15,6 +15,7 @@ const tab = createMaterialBottomTabNavigator();
 export default function CloneTest() {
   return(
     <NavigationContainer>
+      <StatusBar style='auto'/>
       <tab.Navigator initialRouteName='Timer'
                     activeColor="#3e3e3e"
                     inactiveColor="#838383"
