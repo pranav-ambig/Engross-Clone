@@ -55,22 +55,22 @@ const Schedule: React.FC = () => {
         selected={timeToString(new Date())}
         renderItem={renderItem}
       />
-      <MaterialCommunityIcons name="calendar-blank" color={'black'} size={130} style={{position: 'absolute', top: 250, left: 130}}/>
-      <Text style={{position: 'absolute',top:400, right:130 }}>
+      <MaterialCommunityIcons name="calendar-blank" color={'black'} size={130} style={{position: 'absolute', top: 320, left: 135}}/>
+      <Text style={{position: 'absolute',top:450, right:130 }}>
                 No events for the day.
       </Text>
-      <Text style={{position: 'absolute',top:420, right:50, color:'grey' }} >
+      <Text style={{position: 'absolute',top:470, right:50, color:'grey' }} >
                 Tap on + to add an event or create a schedule.
       </Text >
-      <Text style={{fontSize: 20, position: 'absolute', bottom:0}}>
+      <Text style={{fontSize: 20, top: 75, left: 20}}>
         Events
       </Text>
-      <Text style={{left: 70, fontSize:20, top: 50}}>
+      <Text style={{left: 105, fontSize:20, top: 45}}>
         Tasks
       </Text>
       <View >
-      <TouchableOpacity style={{width:50, height: 50, backgroundColor:'grey', left:340, borderRadius: 100}}>
-        <Text>
+      <TouchableOpacity style={{width:50, height: 50, backgroundColor:'#fff', left:340, borderRadius: 100, bottom: 10}}>
+        <Text style={{fontSize: 40, left: 13, bottom: 7}}>
           +
         </Text>
       </TouchableOpacity>
