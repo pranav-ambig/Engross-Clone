@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { View, Text, StyleSheet, StatusBar, TouchableOpacity, Button} from 'react-native';
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
 
@@ -16,22 +16,22 @@ export default function TimerScreen(){
 	const [RemainingTime, setRemainingTime] = useState(0);
 	const [CurrentLabelIndex, setCurrentLabelIndex] = useState(0);
 	const [Duration, setDuration] = useState(10);
+
 	const [TimerView, setTimerView] = useState(
-			<View style={{
-				justifyContent: 'center',
-				alignItems: 'center', 
-				// backgroundColor: 'dodgerblue',
-				width: 220,
-				height: 220,
-				borderRadius:150}}>
-				  <Text style={{fontSize: 17}}>
-					  Hit me
-				  </Text>
-				  <Text style={{fontSize: 17}}>
-					  When you are distracted
-				  </Text>
-			 </View>
-	);
+	<View style={{
+		justifyContent: 'center',
+		alignItems: 'center', 
+		// backgroundColor: 'dodgerblue',
+		width: 220,
+		height: 220,
+		borderRadius:150}}>
+		  <Text style={{fontSize: 17}}>
+			  Hit me
+		  </Text>
+		  <Text style={{fontSize: 17}}>
+			  When you are distracted
+		  </Text>
+	 </View>);
 
 	function resetHandler(){
 		setKey(Key => Key+1);

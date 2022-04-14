@@ -15,7 +15,7 @@ const tab = createMaterialBottomTabNavigator();
 
 export default function CloneTest() {
   return(
-    <NavigationContainer>
+    <NavigationContainer style={{top: StatusBar.currentHeight}}>
       <tab.Navigator initialRouteName='Timer'
                     activeColor="#3e3e3e"
                     inactiveColor="#838383"
