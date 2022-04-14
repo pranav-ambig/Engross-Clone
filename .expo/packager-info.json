@@ -3,8 +3,8 @@
   "expoServerPort": 19000,
   "packagerPort": 19000,
   "packagerPid": null,
-  "expoServerNgrokUrl": "https://f8-hsh.anonymous.engross-clone.exp.direct",
-  "packagerNgrokUrl": "https://f8-hsh.anonymous.engross-clone.exp.direct",
-  "ngrokPid": 13164,
-  "webpackServerPort": null
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null,
+  "webpackServerPort": 19006
 }

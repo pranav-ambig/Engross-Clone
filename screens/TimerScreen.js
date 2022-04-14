@@ -1,7 +1,25 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { View, Text, StyleSheet, StatusBar, TouchableOpacity, Button} from 'react-native';
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
 
+export function DefaultTimerView(){
+	return(
+		<View style={{
+			justifyContent: 'center',
+			alignItems: 'center', 
+			// backgroundColor: 'dodgerblue',
+			width: 220,
+			height: 220,
+			borderRadius:150}}>
+			  <Text style={{fontSize: 17}}>
+				  Hit me
+			  </Text>
+			  <Text style={{fontSize: 17}}>
+				  When you are distracted
+			  </Text>
+		 </View>
+	)
+}
 
 export default function TimerScreen(){
 	const labels = ["Stay focused!",
@@ -17,21 +35,7 @@ export default function TimerScreen(){
 	const [CurrentLabelIndex, setCurrentLabelIndex] = useState(0);
 	const [Duration, setDuration] = useState(10);
 
-	const [TimerView, setTimerView] = useState(
-	<View style={{
-		justifyContent: 'center',
-		alignItems: 'center', 
-		// backgroundColor: 'dodgerblue',
-		width: 220,
-		height: 220,
-		borderRadius:150}}>
-		  <Text style={{fontSize: 17}}>
-			  Hit me
-		  </Text>
-		  <Text style={{fontSize: 17}}>
-			  When you are distracted
-		  </Text>
-	 </View>);
+	const [TimerView, setTimerView] = useState(DefaultTimerView);
 
 	function resetHandler(){
 		setKey(Key => Key+1);
@@ -59,7 +63,11 @@ export default function TimerScreen(){
 	}
 
 	function renderTimerView(remainingTime){
-		setRemainingTime(remainingTime);
+		useEffect(
+			() => {setRemainingTime(remainingTime)},
+			[remainingTime]
+		);
+		// RemainingTime = remainingTime;
 		return(
 		<TouchableOpacity onPress={()=>TimerRunning?updateCount():null}
 			activeOpacity={TimerRunning? 0.2:1}>
@@ -67,7 +75,7 @@ export default function TimerScreen(){
 		</TouchableOpacity>)
 	}
 
-	function renderRemainingTime(time){
+	function formatRemainingTime(time){
 		let time_min = Math.floor(time/60);
 		let time_sec = time%60;
 		if (time_min<10){
@@ -87,15 +95,17 @@ export default function TimerScreen(){
 				return "Work paused!";
 		}
 		else{
-			// console.log(WorkMode, TimerRunning);
 			return "Beat Distractions";
 		}
 	}
 
 	function timerHandler(){
-		setTimerRunning(!TimerRunning);
-		setWorkMode(!WorkMode);
-		getLabel();
+		// console.log(WorkMode, TimerRunning);
+		if (!WorkMode){
+			setTimerRunning(!TimerRunning);
+			setWorkMode(!WorkMode);}
+		else
+			setTimerRunning(!TimerRunning);
 	}
 
 	function breakHandler(){
@@ -107,11 +117,16 @@ export default function TimerScreen(){
 		getLabel();
 	}
 
+	function OnTimerComplete(){
+		setTimerView(DefaultTimerView);
+		resetHandler();
+	}
+
 	return (
 	  <View style={{ flex: 1, justifyContent: 'space-around', alignItems: 'center' }}>
 
 		<Text style={{fontSize: 16}}>{getLabel()}</Text>
-		<Text style={{fontSize: 40}}>{renderRemainingTime(RemainingTime)}</Text>
+		<Text style={{fontSize: 40}}>{formatRemainingTime(RemainingTime)}</Text>
 		
 		<CountdownCircleTimer
 		  key = {Key}
@@ -119,12 +134,12 @@ export default function TimerScreen(){
 		  duration={Duration}
 		  colors={['#000']}
 		  rotation={'counterclockwise'}
-		  size={250}>
+		  size={250}
+		  onComplete={OnTimerComplete}>
 
 		  {({remainingTime}) => renderTimerView(remainingTime)}
 
 		</CountdownCircleTimer>
-  
 		<View style={{width: '100%' ,flexDirection:'row', justifyContent: 'space-evenly'}}>
 		  <Button title={WorkMode? (TimerRunning? "Pause":"Resume") : "Timer"} 
 				  onPress={timerHandler}
