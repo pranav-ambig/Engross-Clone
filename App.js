@@ -5,7 +5,6 @@ import {NavigationContainer} from '@react-navigation/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import TimerScreen from './screens/TimerScreen/TimerScreen'
-// import TimerScreen from './TimerScreen'
 import SettingsScreen from './screens/SettingsScreen/SettingsScreen'
 import StatScreen from './screens/StatScreen/StatScreen'
 import CalendarScreen from './screens/CalendarScreen/CalendarScreen.tsx'
@@ -16,6 +15,7 @@ const tab = createMaterialBottomTabNavigator();
 export default function CloneTest() {
   return(
     <NavigationContainer>
+      <StatusBar style='auto'/>
       <tab.Navigator initialRouteName='Timer'
                     activeColor="#3e3e3e"
                     inactiveColor="#838383"
