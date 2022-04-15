@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from 'react';
-import { View, Text, StyleSheet, StatusBar, TouchableOpacity, Button} from 'react-native';
+import { useEffect, useMemo, useState, Component} from 'react';
+import { View, Text, StyleSheet, StatusBar, TouchableOpacity, Button, Modal} from 'react-native';
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer';
 
 export function DefaultTimerView(){
@@ -21,6 +21,14 @@ export function DefaultTimerView(){
 	)
 }
 
+const styles = StyleSheet.create({
+	modalElementStyle:{
+		fontSize: 20, 
+		backgroundColor:'#fff',
+		width: '100%',
+	}
+})
+
 export default function TimerScreen(){
 	const labels = ["Stay focused!",
 					"Don't get distracted!",
@@ -34,13 +42,9 @@ export default function TimerScreen(){
 	const [RemainingTime, setRemainingTime] = useState(0);
 	const [CurrentLabelIndex, setCurrentLabelIndex] = useState(0);
 	const [Duration, setDuration] = useState(10);
-
 	const [TimerView, setTimerView] = useState(DefaultTimerView);
+	const [ModalVisible, setModalVisible] = useState(true);
 
-	function resetHandler(){
-		setKey(Key => Key+1);
-		setTimerRunning(false);
-	}
 
 	function updateCount(){
 		if (CurrentLabelIndex == 3){
@@ -109,12 +113,25 @@ export default function TimerScreen(){
 	}
 
 	function breakHandler(){
-		if (!WorkMode){
+		if (!WorkMode)
 			setDuration(20);
-		}
-		setTimerRunning(!TimerRunning);
-		setWorkMode(!WorkMode);
-		getLabel();
+		else
+			if (TimerRunning){
+				setDuration(10);
+				setRemainingTime(10);
+				resetHandler();
+			}
+			else{
+				resetHandler();
+			}
+	}
+
+	function resetHandler(){
+		setKey(Key => Key+1);
+		setTimerView(DefaultTimerView);
+		setRemainingTime(10);
+		setWorkMode(false);
+		setTimerRunning(false);
 	}
 
 	function OnTimerComplete(){
@@ -123,7 +140,7 @@ export default function TimerScreen(){
 	}
 
 	return (
-	  <View style={{ flex: 1, justifyContent: 'space-around', alignItems: 'center' }}>
+	  <View style={{ flex: 1, justifyContent: 'space-evenly', alignItems: 'center' }}>
 
 		<Text style={{fontSize: 16}}>{getLabel()}</Text>
 		<Text style={{fontSize: 40}}>{formatRemainingTime(RemainingTime)}</Text>
@@ -149,7 +166,33 @@ export default function TimerScreen(){
 		  <Button title={WorkMode? "Skip" : "Break"} onPress={breakHandler}/>
 		</View>
 
-		<Text style={{position: 'absolute', bottom: 10, right: 30}}>Unlabelled</Text>
+		<Modal
+			animationType = 'slide'
+			transparent = {true}
+			visible = {ModalVisible}
+			onRequestClose = {() => setModalVisible(!ModalVisible)}
+			// style={{backgroundColor: 'red'}}
+			>
+
+			<View style={{justifyContent: 'flex-end', alignItems: 'center', flex:1}}>
+				<TouchableOpacity 
+					onPress={() => setModalVisible(!ModalVisible)}
+					style={{width: '100%', height: '100%'}}
+				>
+				</TouchableOpacity>
+				
+				<Text style={styles.modalElementStyle}>test</Text>
+				<Text style={styles.modalElementStyle}>test</Text>
+			</View>
+
+		</Modal>
+
+		<TouchableOpacity 
+			onPress={() => setModalVisible(!ModalVisible)}
+			style={{position: 'absolute', bottom: 10, right: 30}}
+			>
+			<Text>Unlabelled</Text>
+		</TouchableOpacity>
   
 	  </View>
 	)
