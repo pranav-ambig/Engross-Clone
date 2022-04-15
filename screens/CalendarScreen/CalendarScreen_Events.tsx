@@ -4,6 +4,7 @@ import {Text, View, TouchableOpacity, SafeAreaView, StatusBar, StyleSheet} from 
 import {Agenda} from 'react-native-calendars';
 import {Card, Avatar} from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { NavigationContainer } from '@react-navigation/native';
 
 const timeToString = (time) => {
   const date = new Date(time);

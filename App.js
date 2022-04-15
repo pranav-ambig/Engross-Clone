@@ -7,7 +7,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import TimerScreen from './screens/TimerScreen/TimerScreen'
 import SettingsScreen from './screens/SettingsScreen/SettingsScreen'
 import StatScreen from './screens/StatScreen/StatScreen'
-import CalendarScreen from './screens/CalendarScreen/CalendarScreen.tsx'
+import CalendarScreen from './screens/CalendarScreen/CalendarScreen_Events'
 import TodoScreen from './screens/TodoScreen/TodoScreen'
 
 const tab = createMaterialBottomTabNavigator();
