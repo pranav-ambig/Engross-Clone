@@ -3,17 +3,19 @@ import { View, Text, StyleSheet, StatusBar, TouchableHighlight, Button} from 're
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import {Menu, MenuOptions, MenuOption, MenuProvider, MenuTrigger, renderers} from 'react-native-popup-menu';
 
 import TimerScreen from './screens/TimerScreen/TimerScreen'
 import SettingsScreen from './screens/SettingsScreen/SettingsScreen'
 import StatScreen from './screens/StatScreen/StatScreen'
-import CalendarScreen from './screens/CalendarScreen/CalendarScreen.tsx'
+import Schedule from './screens/CalendarScreen/CalendarScreen_Events'
 import TodoScreen from './screens/TodoScreen/TodoScreen'
 
 const tab = createMaterialBottomTabNavigator();
 
 export default function CloneTest() {
   return(
+    <MenuProvider>
     <NavigationContainer style={{top: StatusBar.currentHeight}}>
       <tab.Navigator initialRouteName='Timer'
                     activeColor="#3e3e3e"
@@ -21,7 +23,7 @@ export default function CloneTest() {
                     barStyle={{ backgroundColor: '#fff' }}
                     shifting={false}>
     
-        <tab.Screen name='Calendar' component={CalendarScreen} 
+        <tab.Screen name='Calendar' component={Schedule} 
           options={{tabBarIcon:({color}) => (
               <MaterialCommunityIcons name="calendar-blank" color={color} size={26}/>)}}/>
 
@@ -43,6 +45,7 @@ export default function CloneTest() {
 
       </tab.Navigator>
     </NavigationContainer>
+    </MenuProvider>
   )
 }
 
